@@ -27,9 +27,11 @@
             border: 2px solid white; /* Add a white border */
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Add a soft shadow */
             overflow: hidden;
+            clip-path: path('M 50 25 C 25 0 0 25 50 75 C 100 25 75 0 50 25 Z');
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)) drop-shadow(0 0 2px white);
             animation: floatUp linear;
             z-index: 0; /* Behind content */
-            opacity: 0.7;
+            opacity: 0.5;
             pointer-events: none; /* Make them not interfere with clicks */
         }
 
@@ -383,4 +385,5 @@ That your eyes close as I fall asleep.
     </script>
 </body>
 </html>
+
 
