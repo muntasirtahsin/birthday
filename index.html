@@ -21,7 +21,12 @@
         .floating-element {
             position: fixed;
             bottom: -150px; /* Start off-screen */
-            font-size: 2rem; /* Size of the emoji */
+            width: 80px; /* Set a width for the picture */
+            height: 80px; /* Set a height for the picture */
+            border-radius: 50%; /* Make it a circle */
+            border: 2px solid white; /* Add a white border */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Add a soft shadow */
+            overflow: hidden;
             animation: floatUp linear;
             z-index: 0; /* Behind content */
             opacity: 0.7;
@@ -234,12 +239,24 @@ That your eyes close as I fall asleep.
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const floatingContainer = document.getElementById('floating-container');
-            const elements = ['🎈', '💖', '🎉', '✨', '❤️'];
+            const elements = [
+                '1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', 
+                '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', 
+                '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg', 
+                '16.jpg', '17.jpg', '18.jpg', '19.jpg', '20.jpg'
+            ];
 
             function createFloatingElement() {
                 const el = document.createElement('div');
                 el.classList.add('floating-element');
-                el.textContent = elements[Math.floor(Math.random() * elements.length)];
+                
+                // Create an img element instead of setting textContent
+                const img = document.createElement('img');
+                img.src = elements[Math.floor(Math.random() * elements.length)];
+                img.style.width = '100%';
+                img.style.height = '100%';
+                img.style.objectFit = 'cover'; // Ensure the image covers the circle
+                el.appendChild(img);
 
                 // Random horizontal position
                 el.style.left = `${Math.random() * 100}vw`;
