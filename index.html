@@ -215,7 +215,7 @@ That your eyes close as I fall asleep.
         <!-- Music Player --><section class="my-12 text-center">
             <h3 class="text-2xl text-rose-500 font-semibold mb-4">A song for you...</h3>
             
-            <!-- === EDIT THIS: Add your .mp3 song (e.g., "song.mp3" or "https://.../song.mp3") === --><audio id="birthday-song" src="song.mp3" loop></audio>
+            <!-- === EDIT THIS: Add your .mp3 song (e.g., "song.mp3" or "https://.../song.mp3") === --><audio id="birthday-song"  src="song.mp3" loop></audio>
             <!-- ================================================================================== -->
             <button id="play-pause-btn" class="bg-rose-500 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-rose-600 transition duration-300 transform hover:scale-105">
                 Play Music
@@ -261,7 +261,7 @@ That your eyes close as I fall asleep.
 
             // --- Music Player Logic ---
             const audio = document.getElementById('birthday-song');
-            audio.volume = 0.5;
+            audio.volume = 0.3; // Set initial volume
             const playBtn = document.getElementById('play-pause-btn');
             let isPlaying = false;
 
