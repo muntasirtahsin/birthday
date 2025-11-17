@@ -49,7 +49,7 @@
         .image-carousel {
             display: flex;
             overflow-x: scroll; /* Changed from auto to scroll for consistent scrollbar presence, though we hide it */
-            scroll-snap-type: x mandatory;
+            /* scroll-snap-type: x mandatory; */
             -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
             scrollbar-width: none; /* Hide scrollbar (Firefox) */
             padding-bottom: 1rem; /* Space for potential scrollbar that might still appear */
@@ -141,6 +141,15 @@
                 <!-- ============================================== --></h2>
         </header>
 
+        <!-- Music Player --><section class="mb-12 text-center">
+            <h3 class="text-2xl text-rose-500 font-semibold mb-4">A song for you...</h3>
+            
+            <audio id="birthday-song"  src="song.mp3" loop></audio>
+            <button id="play-pause-btn" class="bg-rose-500 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-rose-600 transition duration-300 transform hover:scale-105">
+                Play Music
+            </button>
+        </section>
+
         <!-- Main Message --><section class="my-8">
             <p class="text-lg md:text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto">
                 Wishing you the most amazing day, filled with all the joy, laughter, and love you deserve. You make the world brighter just by being in it.
@@ -215,16 +224,6 @@ That your eyes close as I fall asleep.
             </div>
         </section>
 
-        <!-- Music Player --><section class="my-12 text-center">
-            <h3 class="text-2xl text-rose-500 font-semibold mb-4">A song for you...</h3>
-            
-            <!-- === EDIT THIS: Add your .mp3 song (e.g., "song.mp3" or "https://.../song.mp3") === --><audio id="birthday-song"  src="song.mp3" loop></audio>
-            <!-- ================================================================================== -->
-            <button id="play-pause-btn" class="bg-rose-500 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-rose-600 transition duration-300 transform hover:scale-105">
-                Play Music
-            </button>
-        </section>
-
         <!-- Footer Message --><footer class="mt-16 py-8">
             <p class="text-lg text-gray-700">Have the best day ever!</p>
             <p class="text-2xl text-rose-400 mt-2">❤️</p>
@@ -288,21 +287,78 @@ That your eyes close as I fall asleep.
                 isPlaying = false;
             };
 
-            // --- Carousel Navigation Logic ---
+            // --- Carousel Navigation Logic (Infinite Loop Version) ---
             const carousel = document.getElementById('image-carousel');
             const prevBtn = document.getElementById('prev-btn');
             const nextBtn = document.getElementById('next-btn');
+            const itemWidth = 272; // 256px item + 16px margin-right
+            let items = Array.from(carousel.children); // Get original items
 
+            // --- Infinite Loop Setup ---
+            
+            // 1. Clone first and last items
+            // We clone 5, which should be enough for most screens to not see the jump
+            const itemsToClone = 5; 
+            
+            // Clone last items to the beginning
+            for (let i = 0; i < itemsToClone; i++) {
+                // Clone from the end of the *original* items list
+                const clone = items[items.length - 1 - (i % items.length)].cloneNode(true);
+                clone.setAttribute('aria-hidden', 'true');
+                carousel.prepend(clone);
+            }
+
+            // Clone first items to the end
+            for (let i = 0; i < itemsToClone; i++) {
+                // Clone from the start of the *original* items list
+                const clone = items[i % items.length].cloneNode(true);
+                clone.setAttribute('aria-hidden', 'true');
+                carousel.append(clone);
+            }
+
+            // 2. Set initial scroll position (to the start of the *real* items)
+            const initialScroll = itemWidth * itemsToClone;
+            carousel.scrollTo({ left: initialScroll, behavior: 'instant' });
+
+            const realItemsTotalWidth = itemWidth * items.length;
+
+            // 3. Add scroll listener to handle the "jump"
+            let isJumping = false; // Flag to prevent re-triggering during a jump
+            carousel.addEventListener('scroll', () => {
+                if (isJumping) return;
+
+                // Check if scrolled to the "fake" end area
+                // (past the real items + the initial clones)
+                if (carousel.scrollLeft >= initialScroll + realItemsTotalWidth) {
+                    isJumping = true;
+                    // Jump back to the equivalent spot at the beginning
+                    carousel.scrollTo({ left: carousel.scrollLeft - realItemsTotalWidth, behavior: 'instant' });
+                } 
+                // Check if scrolled to the "fake" start area
+                // (before the real items start)
+                else if (carousel.scrollLeft < initialScroll) {
+                    isJumping = true;
+                    // Jump to the equivalent spot at the end
+                    carousel.scrollTo({ left: carousel.scrollLeft + realItemsTotalWidth, behavior: 'instant' });
+                }
+
+                // Reset the flag after the jump settles
+                if (isJumping) {
+                    setTimeout(() => { isJumping = false; }, 50); // 50ms buffer
+                }
+            });
+
+            // 4. Update button logic (it's simpler now)
             prevBtn.addEventListener('click', () => {
                 carousel.scrollBy({
-                    left: -272, // 256px (width) + 16px (margin-right)
+                    left: -itemWidth,
                     behavior: 'smooth'
                 });
             });
 
             nextBtn.addEventListener('click', () => {
                 carousel.scrollBy({
-                    left: 272, // 256px (width) + 16px (margin-right)
+                    left: itemWidth,
                     behavior: 'smooth'
                 });
             });
@@ -310,5 +366,4 @@ That your eyes close as I fall asleep.
     </script>
 </body>
 </html>
-
 
