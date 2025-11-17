@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday!</title>
+    <!-- Tailwind CSS for styling --><script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Font: Inter --><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom font */
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden; /* Prevent horizontal scroll from floating elements */
+        }
+
+        .font-dancing {
+            font-family: 'Dancing Script', cursive;
+        }
+
+        /* --- Floating Elements Animation --- */
+        .floating-element {
+            position: fixed;
+            bottom: -150px; /* Start off-screen */
+            font-size: 2rem; /* Size of the emoji */
+            animation: floatUp linear;
+            z-index: 0; /* Behind content */
+            opacity: 0.7;
+            pointer-events: none; /* Make them not interfere with clicks */
+        }
+
+        @keyframes floatUp {
+            0% {
+                bottom: -150px;
+                transform: translateX(0);
+            }
+            100% {
+                bottom: 110vh; /* End off-screen */
+                transform: translateX(var(--sway)); /* Add a slight sway */
+            }
+        }
+
+        /* --- Image Carousel Styling --- */
+        .image-carousel-container {
+            position: relative;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .image-carousel {
+            display: flex;
+            overflow-x: scroll; /* Changed from auto to scroll for consistent scrollbar presence, though we hide it */
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+            scrollbar-width: none; /* Hide scrollbar (Firefox) */
+            padding-bottom: 1rem; /* Space for potential scrollbar that might still appear */
+            scroll-behavior: smooth; /* Smooth scroll on arrow click */
+        }
+        
+        .image-carousel::-webkit-scrollbar {
+            display: none; /* Hide scrollbar (Chrome, Safari) */
+        }
+
+        .carousel-item {
+            flex: 0 0 256px; /* Set width to 256px */
+            height: 256px; /* Set height to 256px for 1:1 ratio */
+            scroll-snap-align: center;
+            margin-right: 1rem;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            position: relative; /* For image loading placeholder */
+            background-color: #fecaca; /* Placeholder background */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #dc2626;
+            font-weight: bold;
+        }
+
+        .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .carousel-item:last-child {
+            margin-right: 0;
+        }
+
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ef4444; /* Rose-500 */
+            z-index: 10;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease;
+        }
+
+        .carousel-arrow:hover {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        .arrow-left {
+            left: -10px; /* Adjust as needed */
+        }
+
+        .arrow-right {
+            right: -10px; /* Adjust as needed */
+        }
+
+        /* Gradient background */
+        body {
+            background: linear-gradient(135deg, #fff1f2 0%, #ffe4e6 100%);
+        }
+    </style>
+</head>
+<body class="relative min-h-screen">
+
+    <!-- Container for floating elements --><div id="floating-container"></div>
+
+    <!-- Main Content --><div class="relative z-10 p-6 md:p-10 max-w-4xl mx-auto text-center">
+        
+        <!-- Header --><header class="py-8">
+            <h1 class="font-dancing text-6xl md:text-8xl text-rose-500">
+                Happy Birthday,
+            </h1>
+            <h2 class="text-3xl md:text-5xl text-gray-700 mt-2">
+                <!-- === EDIT THIS: Add your crush's name here === -->[Her Name]!
+                <!-- ============================================== --></h2>
+        </header>
+
+        <!-- Main Message --><section class="my-8">
+            <p class="text-lg md:text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto">
+                Wishing you the most amazing day, filled with all the joy, laughter, and love you deserve. You make the world brighter just by being in it.
+                I hope this year brings you everything you've been dreaming of.
+            </p>
+
+            <!-- Poem Added -->
+            <div class="mt-10 max-w-lg mx-auto text-left text-gray-700 italic leading-relaxed" style="white-space: pre-line;">
+                <p class="mb-4">
+I do not love you as you were salt, rose, or topaz,
+Or the arrow of carnations the fire shoots off.
+I love you as certain dark things are to be loved,
+In secret, between the shadow and the soul.
+                </p>
+                <p class="mb-4">
+I love you as the plant that never blooms,
+But carries in itself the light of hidden flowers.
+Thanks to your love,
+A certain solid fragrance, risen from the earth,
+lives darkly in my body.
+                </p>
+                <p class="mb-4">
+I love you,
+I love you without knowing how, or when, or from where.
+I love you straightforwardly, without complexities or pride;
+So I love you because I know no other way than this:
+Where I do not exist, nor you.
+                </p>
+                <p>
+So close
+That your hand on my chest is my hand,
+So close
+That your eyes close as I fall asleep.
+                </p>
+            </div>
+            <!-- End of Poem -->
+        </section>
+
+        <!-- Image Carousel --><section class="my-12">
+            <h3 class="text-2xl text-rose-500 font-semibold mb-6">A few of my favorite moments...</h3>
+            
+            <div class="image-carousel-container">
+                <div class="image-carousel py-4 pl-4 md:pl-8" id="image-carousel">
+                    <!-- === Photos 1-20 === -->
+                    <div class="carousel-item"><img src="1.jpg" alt="Birthday photo 1"></div>
+                    <div class="carousel-item"><img src="2.jpg" alt="Birthday photo 2"></div>
+                    <div class="carousel-item"><img src="3.jpg" alt="Birthday photo 3"></div>
+                    <div class="carousel-item"><img src="4.jpg" alt="Birthday photo 4"></div>
+                    <div class="carousel-item"><img src="5.jpg" alt="Birthday photo 5"></div>
+                    <div class="carousel-item"><img src="6.jpg" alt="Birthday photo 6"></div>
+                    <div class="carousel-item"><img src="7.jpg" alt="Birthday photo 7"></div>
+                    <div class="carousel-item"><img src="8.jpg" alt="Birthday photo 8"></div>
+                    <div class="carousel-item"><img src="9.jpg" alt="Birthday photo 9"></div>
+                    <div class="carousel-item"><img src="10.jpg" alt="Birthday photo 10"></div>
+                    <div class="carousel-item"><img src="11.jpg" alt="Birthday photo 11"></div>
+                    <div class="carousel-item"><img src="12.jpg" alt="Birthday photo 12"></div>
+                    <div class="carousel-item"><img src="13.jpg" alt="Birthday photo 13"></div>
+                    <div class="carousel-item"><img src="14.jpg" alt="Birthday photo 14"></div>
+                    <div class="carousel-item"><img src="15.jpg" alt="Birthday photo 15"></div>
+                    <div class="carousel-item"><img src="16.jpg" alt="Birthday photo 16"></div>
+                    <div class="carousel-item"><img src="17.jpg" alt="Birthday photo 17"></div>
+                    <div class="carousel-item"><img src="18.jpg" alt="Birthday photo 18"></div>
+                    <div class="carousel-item"><img src="19.jpg" alt="Birthday photo 19"></div>
+                    <div class="carousel-item"><img src="20.jpg" alt="Birthday photo 20"></div>
+                    <!-- ===================== -->
+                </div>
+                <!-- Left Arrow --><button class="carousel-arrow arrow-left" id="prev-btn">‹</button>
+                <!-- Right Arrow --><button class="carousel-arrow arrow-right" id="next-btn">›</button>
+            </div>
+        </section>
+
+        <!-- Music Player --><section class="my-12 text-center">
+            <h3 class="text-2xl text-rose-500 font-semibold mb-4">A song for you...</h3>
+            
+            <!-- === EDIT THIS: Add your .mp3 song (e.g., "song.mp3" or "https://.../song.mp3") === --><audio id="birthday-song" src="song.mp3" loop></audio>
+            <!-- ================================================================================== -->
+            <button id="play-pause-btn" class="bg-rose-500 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-rose-600 transition duration-300 transform hover:scale-105">
+                Play Music
+            </button>
+        </section>
+
+        <!-- Footer Message --><footer class="mt-16 py-8">
+            <p class="text-lg text-gray-700">Have the best day ever!</p>
+            <p class="text-2xl text-rose-400 mt-2">❤️</p>
+        </footer>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const floatingContainer = document.getElementById('floating-container');
+            const elements = ['🎈', '💖', '🎉', '✨', '❤️'];
+
+            function createFloatingElement() {
+                const el = document.createElement('div');
+                el.classList.add('floating-element');
+                el.textContent = elements[Math.floor(Math.random() * elements.length)];
+
+                // Random horizontal position
+                el.style.left = `${Math.random() * 100}vw`;
+                // Random animation duration
+                const duration = Math.random() * 10 + 10; // 10-20 seconds
+                el.style.animationDuration = `${duration}s`;
+                // Random sway
+                const sway = (Math.random() - 0.5) * 200; // -100px to +100px
+                el.style.setProperty('--sway', `${sway}px`);
+
+                floatingContainer.appendChild(el);
+
+                // Remove element after animation
+                setTimeout(() => {
+                    el.remove();
+                }, duration * 1000);
+            }
+
+            // Create a new element every 700ms
+            setInterval(createFloatingElement, 700);
+
+            // --- Music Player Logic ---
+            const audio = document.getElementById('birthday-song');
+            audio.volume = 0.5;
+            const playBtn = document.getElementById('play-pause-btn');
+            let isPlaying = false;
+
+            playBtn.addEventListener('click', () => {
+                if (isPlaying) {
+                    audio.pause();
+                    playBtn.textContent = 'Play Music';
+                } else {
+                    audio.play().catch(error => {
+                        console.error("Audio playback failed:", error);
+                        playBtn.textContent = 'Click again to play';
+                    });
+                    playBtn.textContent = 'Pause Music';
+                }
+                isPlaying = !isPlaying;
+            });
+
+            // Handle when audio ends (if not looping, though loop is on)
+            audio.onended = () => {
+                playBtn.textContent = 'Play Music';
+                isPlaying = false;
+            };
+
+            // --- Carousel Navigation Logic ---
+            const carousel = document.getElementById('image-carousel');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+
+            prevBtn.addEventListener('click', () => {
+                carousel.scrollBy({
+                    left: -272, // 256px (width) + 16px (margin-right)
+                    behavior: 'smooth'
+                });
+            });
+
+            nextBtn.addEventListener('click', () => {
+                carousel.scrollBy({
+                    left: 272, // 256px (width) + 16px (margin-right)
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
